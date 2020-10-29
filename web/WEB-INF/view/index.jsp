@@ -9,11 +9,14 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page isELIgnored="false" %>
+
 <%
   String contextPath = request.getContextPath();
   String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+contextPath+"/";
-%>
 
+%>
 <html>
 <head>
   <%--设置基础路径为项目根目录--%>
@@ -27,20 +30,14 @@
   <script type="text/javascript" rel="script" src="resources/js/bootstrap.bundle.min.js"></script>
   <script type="text/javascript" rel="script" src="resources/js/bootstrap.min.js"></script>
 
-  <%--        <script type="text/javascript" rel="script" src="resources/js/vue.js"></script>
-      <!-- 引入elementui样式 -->
-          <link rel="stylesheet" href="resources/css/elementui.css" type="text/css">
-      <!-- 引入elementui组件库 -->
-          <script type="text/javascript" rel="script" src="resources/js/elementui.js"></script>--%>
   <title>博客列表</title>
-
 
 </head>
 
 <style>
   .jumbotron{
     height: 400px;
-    background: url("resources/img/futa.jpg") center;
+    background: url("resources/img/background.jpg") center;
   }
 
   .fixheight{
@@ -49,64 +46,36 @@
 
   #thefirst{
     height: 150px;
+    background-color: gold;
+    line-height: 150px;
   }
   #thesecond{
-    height: 200px;
+    height: 170px;
+    background-color: #b3b7bb;
+    line-height: 200px;
   }
   #thethird{
-    height: 250px;
+    height: 190px;
+    background-color: lightyellow;
+    line-height: 250px;
   }
   .incenter{
     text-align: center;
+  }
+  .hotBlog{
+    font-size: 80px;
+    text-align: center;
+  }
+
+  .titleInText{
+    font-weight: bold;
+    cursor: pointer;
   }
 </style>
 
 <body>
 
-
-  <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-    <div class="container-fluid">
-    <a class="navbar-brand" href="#">JKBlog</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">主页 <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">发博客</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            更多
-          </a>
-          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#">关于博客</a>
-            <a class="dropdown-item" href="#">关注</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">退出登录</a>
-          </div>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">其他事务</a>
-        </li>
-      </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <span id="login">登录</span>&nbsp;&nbsp;
-        <span id="register">注册</span>
-      </form>
-    </div>
-    </div>
-  </nav>
-
-
-<div style="height: 70px"></div>
+<%@include file="header.jsp" %>
 
 <div class="container-fluid">
   <div class="row">
@@ -116,58 +85,116 @@
         <p class="lead">欢迎来到JKBlog,你可以记录学习的心得，知识点，笔记。<br/>这里是值得依赖的地方</p>
         <hr class="my-4">
         <p>加入JKBlog开放更多功能</p>
-        <a class="btn btn-primary btn-lg" href="#" role="button">现在开始</a>
+        <a class="btn btn-primary btn-lg" href="login" role="button">现在开始</a>
       </div>
 
+      <%--前三--%>
       <div class="container-fluid">
         <div class="row incenter">
           <div class="col-4 incenter">
             <div class="card fixheight">
-              <img src="..." class="card-img-top" alt="..." id="thesecond">
+              <div id="thesecond" class="card-img-top">
+                <div class="hotBlog">2</div>
+              </div>
               <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <c:if test="${requestScope.blogs.size() > 1}" >
+                  <p class="titleInText"
+                     onclick="contentDetail(${requestScope.blogs[1].blogId})">
+                      ${requestScope.blogs[1].blogTitle}
+                  </p>
+                  <hr/>
+                  <p class="contentInText">
+                    ${requestScope.blogs[1].blogBriefContent}
+                  </p>
+                  <p class="statusInText">
+                    <span class="badge badge-primary">阅读数：${requestScope.blogs[1].blogReadTimes}</span>
+                    <span class="badge badge-success">评论数：${requestScope.blogs[1].blogCommentTimes}</span>
+                  </p>
+                </c:if>
               </div>
             </div>
           </div>
           <div class="col-4 incenter">
             <div class="card fixheight">
-              <img src="..." class="card-img-top" alt="..." id="thefirst">
+              <div id="thefirst" class="card-img-top">
+                <div class="hotBlog">1</div>
+              </div>
               <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <p class="card-text">
+                  <c:if test="${requestScope.blogs.size() > 0}" >
+                  <p class="titleInText"
+                     onclick="contentDetail(${requestScope.blogs[0].blogId})">
+                    ${requestScope.blogs[0].blogTitle}
+                  </p>
+                  <hr/>
+                  <p class="contentInText">
+                    ${requestScope.blogs[0].blogBriefContent}
+                  </p>
+                  <p class="statusInText">
+                    <span class="badge badge-primary">阅读数：${requestScope.blogs[0].blogReadTimes}</span>
+                    <span class="badge badge-success">评论数：${requestScope.blogs[0].blogCommentTimes}</span>
+                  </p>
+                </c:if>
+                </p>
               </div>
             </div>
           </div>
           <div class="col-4 incenter">
             <div class="card fixheight">
-              <img src="..." class="card-img-top" alt="..." id="thethird">
+              <div id="thethird" class="card-img-top">
+                <div class="hotBlog">3</div>
+              </div>
               <div class="card-body">
-                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <c:if test="${requestScope.blogs.size() > 2}" >
+                <p class="titleInText"
+                   onclick="contentDetail(${requestScope.blogs[2].blogId})">
+                  ${requestScope.blogs[2].blogTitle}
+                </p>
+                <hr/>
+                <p class="contentInText">
+                  ${requestScope.blogs[2].blogBriefContent}
+                </p>
+                <p class="statusInText">
+                  <span class="badge badge-primary">阅读数：${requestScope.blogs[2].blogReadTimes}</span>
+                  <span class="badge badge-success">评论数：${requestScope.blogs[2].blogCommentTimes}</span>
+                </p>
+                </c:if>
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div style="height: 20px"></div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
-        </div>
-      </div>
-      <div style="height: 20px"></div>
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Card title</h5>
-          <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-          <a href="#" class="card-link">Card link</a>
-          <a href="#" class="card-link">Another link</a>
         </div>
       </div>
 
+      <%--后面的--%>
+      <div style="height: 10px"></div>
+
+      <c:if test="${requestScope.blogs.size() > 3}">
+      <c:forEach items="${requestScope.blogs}" var="blog" begin="3" end="${requestScope.blogs.size() - 1 }">
+        <div style="height: 10px"></div>
+        <div class="card">
+          <div class="card-body">
+            <p class="titleInText"
+               onclick="contentDetail(${blog.blogId})">
+                ${blog.blogTitle}
+            </p>
+            <hr/>
+            <p class="contentInText">
+                ${blog.blogBriefContent}
+            </p>
+            <p class="statusInText">
+              <span class="badge badge-primary">阅读数：${blog.blogReadTimes}</span>
+              <span class="badge badge-success">评论数：${blog.blogCommentTimes}</span>
+            </p>
+            <a href="blogdetail?blogId=${blog.blogId}" class="card-link">查看</a>
+            <a href="blogdetail?blogId=${blog.blogId}" class="card-link">其他</a>
+          </div>
+        </div>
+      </c:forEach>
+      </c:if>
+      <div style="height: 20px"></div>
+      <ul class="list-group">
+        <li class="list-group-item"> 请登录以查看更多</li>
+      </ul>
     </div>
     <div class="col-2">
       <div style="padding-left: 1rem">
@@ -179,6 +206,13 @@
   </div>
 </div>
 
+<script>
+
+  function contentDetail(blogId) {
+    window.location.href = "blogdetail?blogId="+blogId;
+  }
+
+</script>
 
 </body>
 </html>

@@ -1,5 +1,6 @@
 package com.jkblog.servlet;
 
+import com.jkblog.entity.UserGender;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;

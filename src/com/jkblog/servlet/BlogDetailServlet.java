@@ -1,5 +1,6 @@
 package com.jkblog.servlet;
 
+import com.jkblog.service.BlogService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 @WebServlet(name = "BlogDetailServlet",urlPatterns = "/blogdetail")
 public class BlogDetailServlet extends HttpServlet {
@@ -23,6 +25,39 @@ public class BlogDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.info(this.getClass().getName() + "类调用了doGet方法");
-        req.getRequestDispatcher("/WEB-INF/view/blogDetail.jsp").forward(req,resp);
+
+        String blogId = req.getParameter("blogId");
+        if(blogId != null){
+            Integer blogIntId = Integer.parseInt(blogId);
+            BlogService blogService = new BlogService();
+            Map<String, Object> allInfo = blogService.getBlogAllInfo(blogIntId);
+            /*数据库无内容时跳转至错误页*/
+            if(allInfo == null){
+                jumpToError("博客不存在",req,resp);
+            }else{
+                req.setAttribute("allInfo",allInfo);
+                req.getRequestDispatcher("/WEB-INF/view/blogDetail.jsp").forward(req,resp);
+            }
+        }else{
+            jumpToError("博客地址不正确",req,resp);
+        }
+
+    }
+
+    /**
+     * 跳转至统一的错误处理页面，提示用户
+     * @param errorMsg
+     * @param request
+     * @param response
+     */
+    public void jumpToError(String errorMsg,HttpServletRequest request,HttpServletResponse response){
+        request.setAttribute("errorTips",errorMsg);
+        try {
+            request.getRequestDispatcher("/WEB-INF/view/error.jsp").forward(request,response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

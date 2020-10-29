@@ -31,26 +31,11 @@
 </head>
 
 <style>
-    .jumbotron{
-        height: 350px;
-        background: url("resources/img/jk002.jpg") center;
-    }
-
-    .fixheight{
-        height: 400px;
-    }
-
-    #thefirst{
-        height: 150px;
-    }
-    #thesecond{
-        height: 200px;
-    }
-    #thethird{
-        height: 250px;
-    }
     .incenter{
         text-align: center;
+    }
+    .container-fluid{
+        width: 80%;
     }
 </style>
 
@@ -58,6 +43,7 @@
 
 <%@include file="header.jsp" %>
 <div class="container-fluid">
+    <h3 class="incenter">新建博客</h3>
     <form>
         <div class="mb-3">
             <label for="validationTitle">标题</label>
@@ -79,47 +65,67 @@
                 <option value="2">Two</option>
                 <option value="3">Three</option>
             </select>
-            <button class="btn btn-success">新增分类</button>
+            <button class="btn btn-success" id="categoryAddButton">新增分类</button>
         </div>
         <div class="mb-3">
             <label for="validationContent">正文</label>
             <div id="div1" id="validationContent">
-                <p>欢迎使用 <b>wangEditor</b> 富文本编辑器,，开始写博客吧</p>
+                <p>欢迎使用 <b>Jodit</b> 富文本编辑器,，开始写博客吧</p>
             </div>
         </div>
         <button class="btn btn-success">提交</button>
     </form>
-
 </div>
 
+<div class="modal" tabindex="-1" role="dialog" id="categoryAddModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">新增分类</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <form>
+                        <div class="form-group row">
+                            <label for="inputEmail3" class="col-sm-2 col-form-label">分类名</label>
+                            <div class="col-sm-10">
+                                <input type="email" class="form-control" id="inputEmail3">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">分类描述</label>
+                            <div class="col-sm-10">
+                                <textarea  class="form-control" id="inputPassword3" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-
-<script type="text/javascript" src="//unpkg.com/wangeditor/dist/wangEditor.min.js"></script>
+<script type="text/javascript" src="resources/js/wangEditor.min.js"></script>
 <script type="text/javascript">
     const E = window.wangEditor
     const editor = new E('#div1')
     // 或者 const editor = new E( document.getElementById('div1') )
+    editor.config.zIndex = 500
     editor.create()
 
 
-</script>
-
-<%--<link rel="stylesheet" type="text/css" href="[style path]/simditor.css" />
-
-<script type="text/javascript" src="[script path]/jquery.min.js"></script>
-<script type="text/javascript" src="[script path]/module.js"></script>
-<script type="text/javascript" src="[script path]/hotkeys.js"></script>
-<script type="text/javascript" src="[script path]/uploader.js"></script>
-<script type="text/javascript" src="[script path]/simditor.js"></script>
-
-
-<textarea id="editor" placeholder="Balabala" autofocus></textarea>
-<script>
-    var editor = new Simditor({
-        textarea: $('#editor')
-        //optional options
+    $("#categoryAddButton").click(function () {
+        $('#categoryAddModal').modal('show');
     });
-</script>--%>
+
+</script>
 </body>
 </html>
 
