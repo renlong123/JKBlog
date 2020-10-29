@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: renlo
@@ -7,9 +8,15 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 
+<script>
+    $(function () {
+
+    });
+</script>
+
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="/index">JKBlog</a>
+        <a class="navbar-brand" href="index">JKBlog</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -42,12 +49,22 @@
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="login">登录</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="register">注册</a>
-                    </li>
+                    <c:if test="${sessionScope.userName == null}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="login">登录</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="register">注册</a>
+                        </li>
+                    </c:if>
+                    <c:if test="${sessionScope.userName != null}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="homepage?userId=${sessionScope.userId}">${sessionScope.userName}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="loginOut">退出</a>
+                        </li>
+                    </c:if>
                 </ul>
                 <%--<span id="login" >登录</span>&nbsp;&nbsp;
                 <span id="register">注册</span>--%>

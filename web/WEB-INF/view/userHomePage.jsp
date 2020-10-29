@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: renlo
@@ -41,70 +42,14 @@
         background: url("resources/img/jk002.jpg") center;
     }
 
-    .fixheight{
-        height: 400px;
-    }
-
-    #thefirst{
-        height: 150px;
-    }
-    #thesecond{
-        height: 200px;
-    }
-    #thethird{
-        height: 250px;
-    }
-    .incenter{
-        text-align: center;
+    .titleInText{
+        font-weight: bold;
+        cursor: pointer;
     }
 </style>
 
 <body>
-
-
-<nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#">JKBlog</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">主页 <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">发博客</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        更多
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">关于博客</a>
-                        <a class="dropdown-item" href="#">关注</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">退出登录</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">其他事务</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                <span id="login">登录</span>&nbsp;&nbsp;
-                <span id="register">注册</span>
-            </form>
-        </div>
-    </div>
-</nav>
-
-
-<div style="height: 70px"></div>
+<%@include file="header.jsp" %>
 
 <div class="container-fluid">
     <div class="row">
@@ -113,113 +58,48 @@
                 <div class="text-center">
                     <img src="resources/img/javalogo.jpg" class="rounded card-img-top" alt="头像不见了" style="width: 80px;height: 80px">
                 </div>
-                <h3>头顶的星空</h3>
-                <p class="lead">欢迎来到JKBlog,你可以记录学习的心得，知识点，笔记。<br/>这里是值得依赖的地方</p>
+                <h3>${requestScope.user.userName}</h3>
+                <p class="lead">${requestScope.user.userDescription}</p>
                 <p>
-                    <span class="badge badge-secondary">男</span>
-                    <span class="badge badge-secondary">年龄：29</span>
-                    <span class="badge badge-secondary">等级：6</span>
-                    <span class="badge badge-secondary">等级：6</span>
-                    <span class="badge badge-secondary">等级：6</span>
+                    <span class="badge badge-secondary">UID: ${requestScope.user.userId}</span>
+                    <span class="badge badge-secondary">${requestScope.user.userGender}</span>
+                    <span class="badge badge-secondary">
+                        加入时间：
+                        <fmt:formatDate value="${requestScope.user.userCreateTime}" pattern="yyy-MM-dd"></fmt:formatDate>
+                    </span>
                 </p>
-                <button type="button" class="btn btn-primary">修改信息</button>
-                <button type="button" class="btn btn-success">发博客</button>
+                <button type="button" class="btn btn-primary" onclick="window.location.href='userinfo'">修改信息</button>
+                <button type="button" class="btn btn-success" onclick="window.location.href='blogedit'">发博客</button>
             </div>
             <%--最热文章--%>
-            热门文章
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
+            <p>
+                热门文章
+                <button class="btn btn-success btn-sm" onclick="window.location.href='blogs/page'" style="float: right">
+                    查看全部
+                </button>
+            </p>
+            <c:forEach items="${requestScope.blogs}" var="blog" begin="0" end="${requestScope.blogs.size() - 1 }">
+                <div style="height: 10px"></div>
+                <div class="card">
+                    <div class="card-body">
+                        <p class="titleInText"
+                           onclick="contentDetail(${blog.blogId})">
+                                ${blog.blogTitle}
+                        </p>
+                        <hr/>
+                        <p class="contentInText">
+                                ${blog.blogBriefContent}
+                        </p>
+                        <p class="statusInText">
+                            <span class="badge badge-primary">阅读数：${blog.blogReadTimes}</span>
+                            <span class="badge badge-success">评论数：${blog.blogCommentTimes}</span>
+                        </p>
+                        <button class="btn btn-danger btn-sm" onclick="window.location.href='blogdetail?blogId=${blog.blogId}'">查看</button>
+                        <button class="btn btn-danger btn-sm" onclick="window.location.href='blogedit?blogId=${blog.blogId}'">编辑</button>
+                        <button class="btn btn-danger btn-sm" id="blogDeleteButton" onclick="deleteBlog('${blog.blogTitle}','${blog.blogId}')">删除</button>
+                    </div>
                 </div>
-            </div>
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-
-
-            <div style="height: 20px"></div>
-            全部文章
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-            <div style="height: 10px"></div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div>
-            </div>
-            <div style="height: 10px"></div>
-            <div class="incenter">
-                <nav aria-label="..." >
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-
+            </c:forEach>
         </div>
         <div class="col-2">
             <div style="padding-left: 1rem">
@@ -231,7 +111,50 @@
     </div>
 </div>
 
+<div class="modal" tabindex="-1" role="dialog" id="blogDeleteModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">删除博客</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div>
+                    你确定要删除该博客吗？
+                </div>
+                <hr/>
+                <div id="titleDescription"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="deleteConfirm">确定删除</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script>
+    function contentDetail(blogId) {
+        window.location.href = "blogdetail?blogId="+blogId;
+    }
+
+    function deleteBlog(blogTitle,blogId){
+        $('#titleDescription').html(blogTitle);
+        $('#blogDeleteModal').modal('show');
+        $("#deleteConfirm").click(function () {
+            window.location.href = "blogdelete?blogId="+blogId;
+        });
+    }
+
+    $(function () {
+
+
+
+    });
+
+</script>
 </body>
 </html>
 

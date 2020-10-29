@@ -82,9 +82,10 @@ public class JDBCDAO {
      * @param sql
      * @param args
      */
-    public void comUpdate(String sql,Object... args){
+    public static int comUpdate(String sql,Object... args){
         Connection con = null;
         PreparedStatement ps = null;
+        int update = 0;
         try {
             con = DBUtil.getConnection();
             ps = con.prepareStatement(sql);
@@ -93,7 +94,7 @@ public class JDBCDAO {
                 ps.setObject(i + 1, args[i]);
             }
             //ps.addBatch();
-            ps.executeUpdate();
+            update = ps.executeUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -101,6 +102,75 @@ public class JDBCDAO {
             DBUtil.closeStatement(ps);
             DBUtil.closeConnection(con);
         }
+        return update;
     }
 
+    /**
+     * 查找单一字符串
+     * @param sql
+     * @param args
+     * @return
+     */
+    public static String selectStringItem(String sql,Object... args){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        String string = null;
+
+        try {
+            con = DBUtil.getConnection();
+            ps = con.prepareStatement(sql);
+
+            /*逐个设置预处理条件*/
+            for(int i=0;i<args.length;i++){
+                ps.setObject(i+1,args[i]);
+            }
+
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                string = rs.getString(1);
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closeStatement(ps);
+            DBUtil.closeConnection(con);
+        }
+        return string;
+    }
+
+    public static int getCount(String sql,Object... args){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        int count = 0;
+
+        try {
+            con = DBUtil.getConnection();
+            ps = con.prepareStatement(sql);
+
+            /*逐个设置预处理条件*/
+            for(int i=0;i<args.length;i++){
+                ps.setObject(i+1,args[i]);
+            }
+
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                count = rs.getInt(1);
+            }
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closeStatement(ps);
+            DBUtil.closeConnection(con);
+        }
+        return count;
+    }
 }

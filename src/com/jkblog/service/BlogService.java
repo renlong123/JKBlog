@@ -34,6 +34,7 @@ public class BlogService {
         return maps;
     }
 
+
     /**
      * 根据分类ID查找分类所有信息
      * @param blogCategoryId
@@ -68,4 +69,12 @@ public class BlogService {
             return null;
         }
     }
+
+    public int deleteBlogByBlogId(Integer blogId){
+        String sql = "delete from blog where blogId=?";
+        int update = JDBCDAO.comUpdate(sql, blogId);
+        return update;
+    }
+
+
 }

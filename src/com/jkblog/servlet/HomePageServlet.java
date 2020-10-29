@@ -1,5 +1,8 @@
 package com.jkblog.servlet;
 
+import com.jkblog.entity.Blog;
+import com.jkblog.entity.BlogUser;
+import com.jkblog.service.UserService;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
@@ -7,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 @WebServlet(name = "HomePageServlet",urlPatterns = "/homepage")
 public class HomePageServlet extends HttpServlet {
@@ -21,7 +26,19 @@ public class HomePageServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        logger.info(this.getClass().getName() + "类调用了doGet方法");
-        request.getRequestDispatcher("/WEB-INF/view/userHomePage.jsp").forward(request,response);
+
+        HttpSession session = request.getSession();
+        Integer userId = (Integer) session.getAttribute("userId");
+        if(userId == null || userId.equals("")){
+            response.sendRedirect("login");
+        }else{
+            UserService userService = new UserService();
+            BlogUser user = userService.getUserByUserId(userId);
+            request.setAttribute("user",user);
+            List<Blog> blogs = userService.getHotBlogsByUserId(userId);
+            request.setAttribute("blogs",blogs);
+            request.getRequestDispatcher("/WEB-INF/view/userHomePage.jsp").forward(request,response);
+
+        }
     }
 }

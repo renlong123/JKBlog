@@ -54,25 +54,30 @@
             <div class="card-body incenter">
                 <h5 class="card-title">请登录</h5>
                 <p class="card-text">
-                <form>
+                <form method="POST" action="login" >
                     <div class="form-group row">
-                        <label for="inputEmail3" class="col-sm-2 col-form-label">用户名</label>
+                        <label for="inputusername" class="col-sm-2 col-form-label">用户名</label>
                         <div class="col-sm-10">
-                            <input type="email" class="form-control" id="inputEmail3" placeholder="请输入用户名">
+                            <input type="text" class="form-control" id="inputusername" placeholder="请输入用户名" name="userName">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="inputPassword3" class="col-sm-2 col-form-label">分类描述</label>
+                        <label for="inputPassword" class="col-sm-2 col-form-label">密码</label>
                         <div class="col-sm-10">
-                            <input type="password"  class="form-control" id="inputPassword3" placeholder="请输入密码"></input>
+                            <input type="password"  class="form-control" id="inputPassword" placeholder="请输入密码" name="userPassword">
                         </div>
                     </div>
+                    <div class="incenter " style="color: red">
+                        ${requestScope.loginTips}
+                    </div>
+                    <br/>
+                    <p class="incenter">
+                        <button class="btn btn-success" type="submit">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-success" onclick="window.location.href='register';">注册</button>
+                    </p>
                 </form>
                 </p>
-                <p class="incenter">
-                    <button class="btn btn-success">登录</button>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button class="btn btn-success">注册</button>
-                </p>
+
             </div>
         </div>
     </div>
