@@ -26,11 +26,10 @@
     <script type="text/javascript" rel="script" src="resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" rel="script" src="resources/js/bootstrap.min.js"></script>
 
-    <%--        <script type="text/javascript" rel="script" src="resources/js/vue.js"></script>
-        <!-- 引入elementui样式 -->
-            <link rel="stylesheet" href="resources/css/elementui.css" type="text/css">
-        <!-- 引入elementui组件库 -->
-            <script type="text/javascript" rel="script" src="resources/js/elementui.js"></script>--%>
+        <%--bootstrap文件上传组件--%>
+        <link type="text/css" rel="stylesheet" href="resources/css/fileinput.css" />
+        <script type="text/javascript" src="resources/js/fileinput.js"></script>
+        <script type="text/javascript" src="resources/js/zh.js"></script>
     <title>博客列表</title>
 
 
@@ -57,9 +56,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-10">
-            <div class="jumbotron incenter">
-                <div class="text-center">
-                    <img src="resources/img/javalogo.jpg" class="rounded card-img-top" alt="头像不见了" style="width: 80px;height: 80px">
+            <div class="jumbotron">
+                <div class="text-center" style="text-align: left">
+                    <img src="headerpic?userId=${requestScope.user.userId}" class="rounded card-img-top" alt="头像不见了"
+                         style="width: 80px;height: 80px" onclick="changeHeader()">
                 </div>
                 <h3>${requestScope.user.userName}</h3>
                 <p class="lead">${requestScope.user.userDescription}</p>
@@ -138,6 +138,35 @@
     </div>
 </div>
 
+<div class="modal" tabindex="-1" role="dialog" id="headerChangeModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">跟换头像</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="originalImage">原头像</label>
+                    <img src="headerpic?userId=${requestScope.user.userId}" style="width: 50px;height: 50px" id="originalImage">
+                </div>
+                <hr/>
+                <div class="form-group">
+                    <label for="exampleFormControlFile">新头像</label>
+                    <input type="file" name="image" class="file" id="exampleFormControlFile"/>
+                    <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过10.0M</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="changeConfirm">确定修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
     function contentDetail(blogId) {
         window.location.href = "blogdetail?blogId="+blogId;
@@ -151,9 +180,38 @@
         });
     }
 
+    $("#exampleFormControlFile").fileinput({
+        language: 'zh',
+        uploadUrl: "headerpic", //上传的地址
+        allowedFileExtensions : ['jpg', 'png','gif','jpeg'],//接收的文件后缀
+        showUpload: true, //是否显示上传按钮
+        showCaption: true,//是否显示标题
+        browseClass: "btn btn-primary", //按钮样式
+        dropZoneEnabled: false,//是否显示拖拽区域
+        maxImageWidth: 1000,//图片的最大宽度
+        maxImageHeight: 1000,//图片的最大高度
+        maxFileSize: 10240,//单位为kb，如果为0表示不限制文件大小
+    });
+
+    $("#exampleFormControlFile").on("fileuploaded", function (event, data, previewId, index) {
+        alert(11);
+    });
+
+    function changeHeader(){
+        $('#headerChangeModal').modal('show');
+        $("#changeConfirm").click(function () {
+            /*$.ajax({
+                type: "POST",
+                url: "headerpic",
+                dataType: "json",
+                success: function (categoryList) {
+                    updateCategory(categoryList);
+                }
+            });*/
+        });
+    }
+
     $(function () {
-
-
 
     });
 

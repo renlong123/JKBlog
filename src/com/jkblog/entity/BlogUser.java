@@ -10,6 +10,28 @@ public class BlogUser {
     private Integer userId;
     private String userName;
     private String userPassword;
+    private String userDescription;
+    private UserGender userGender;
+    private Date userCreateTime;
+    private Date userBirthDay;
+    private Integer userBlogCount;
+    private String userEmail;
+
+    public Date getUserBirthDay() {
+        return userBirthDay;
+    }
+
+    public void setUserBirthDay(Date userBirthDay) {
+        this.userBirthDay = userBirthDay;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
 
     public String getUserPassword() {
         return userPassword;
@@ -19,11 +41,7 @@ public class BlogUser {
         this.userPassword = userPassword;
     }
 
-    private String userDescription;
-    private UserGender userGender;
 
-    private Date userCreateTime;
-    private Date userBirthDay;
 
     public Date getUserBirthTime() {
         return userBirthDay;
@@ -33,7 +51,7 @@ public class BlogUser {
         this.userBirthDay = userBirthDay;
     }
 
-    private Integer userBlogCount;
+
 
     public Integer getUserId() {
         return userId;

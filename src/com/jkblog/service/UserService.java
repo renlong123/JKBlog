@@ -31,13 +31,15 @@ public class UserService {
     }
 
     public List<Blog> getHotBlogsByUserId(Integer userId){
-        String sql = "select blogId,blogTitle,blogReadTimes,blogCategoryId,blogCommentTimes,blogBriefContent from blog where blogUserId=? order by blogReadTimes desc limit 0,5";
+        String sql = "select blogId,blogTitle,blogReadTimes,blogCategoryId,blogCommentTimes,blogBriefContent " +
+                "from blog where blogUserId=? order by blogReadTimes desc limit 0,5";
         List<Blog> blogs = JDBCDAO.serachObject(Blog.class, sql,userId);
         return blogs;
     }
 
     public List<Blog> getBlogsByUserIdLimit(Integer userId,Integer page,Integer size){
-        String sql = "select blogId,blogTitle,blogReadTimes,blogCategoryId,blogCommentTimes,blogEditTime,blogBriefContent from blog where blogUserId=? order by blogEditTime desc limit ?,?";
+        String sql = "select blogId,blogTitle,blogReadTimes,blogCategoryId,blogCommentTimes,blogEditTime,blogBriefContent " +
+                "from blog where blogUserId=? order by blogEditTime desc limit ?,?";
         System.out.println();
         List<Blog> blogs = JDBCDAO.serachObject(Blog.class, sql,userId,page-1,size);
         return blogs;
@@ -48,4 +50,8 @@ public class UserService {
         int count = JDBCDAO.getCount(sql, userId);
         return count;
     }
+
+/*    public int getUserByUserName(String userName){
+
+    }*/
 }
