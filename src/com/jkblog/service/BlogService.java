@@ -5,6 +5,7 @@ import com.jkblog.entity.Blog;
 import com.jkblog.entity.BlogCategory;
 import com.jkblog.entity.BlogUser;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,5 +77,34 @@ public class BlogService {
         return update;
     }
 
+    public int insertBlog(Blog blog){
+        String sql = "insert into blog values(null,?,?,?,?,?,?,?,?)";
+
+        Date now = new Date();
+        String content = blog.getBlogContent();
+        String subString = content.substring(0,content.length()>50?50:content.length()-1);
+        subString = subString.replaceAll("img","图片").replaceAll("<","").replaceAll(">","");
+
+        //System.out.println(blog);
+
+        int i = JDBCDAO.comUpdate(sql, blog.getBlogTitle(), content, 0, 0, now, blog.getBlogUserId(), blog.getBlogCategoryId(), subString);
+
+        return i;
+    }
+
+    public int updateBlog(Blog blog){
+
+        String sql = "update blog set blogTitle=?,blogContent=?,blogEditTime=?,blogCategoryId=?,blogBriefContent=? where blogId=?";
+
+        Date now = new Date();
+        String content = blog.getBlogContent();
+        String subString = content.substring(0,content.length()>50?50:content.length()-1);
+        subString = subString.replaceAll("img","图片").replaceAll("<","").replaceAll(">","");
+
+        int i = JDBCDAO.comUpdate(sql, blog.getBlogTitle(), content, now, blog.getBlogCategoryId(), subString, blog.getBlogId());
+
+        return i;
+
+    }
 
 }

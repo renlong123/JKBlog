@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.jkblog.service.CommonService.jumpToError;
+
 @WebServlet(name = "BlogDetailServlet",urlPatterns = "/blogdetail")
 public class BlogDetailServlet extends HttpServlet {
 
@@ -44,20 +46,5 @@ public class BlogDetailServlet extends HttpServlet {
 
     }
 
-    /**
-     * 跳转至统一的错误处理页面，提示用户
-     * @param errorMsg
-     * @param request
-     * @param response
-     */
-    public void jumpToError(String errorMsg,HttpServletRequest request,HttpServletResponse response){
-        request.setAttribute("errorTips",errorMsg);
-        try {
-            request.getRequestDispatcher("/WEB-INF/view/error.jsp").forward(request,response);
-        } catch (ServletException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+
 }

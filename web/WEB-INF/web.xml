@@ -5,7 +5,12 @@
          version="4.0" metadata-complete="false">
 
     <!--欢迎页面-->
-    <welcome-file-list>
-        <welcome-file>/index</welcome-file>
-    </welcome-file-list>
+<!--    <welcome-file-list>
+        <welcome-file>index</welcome-file>
+    </welcome-file-list>-->
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/resources/*</url-pattern>
+    </servlet-mapping>
 </web-app>

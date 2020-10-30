@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * web应用主页，默认进入该页面
  */
-@WebServlet(name = "IndexServlet",urlPatterns = "/index")
+@WebServlet(name = "IndexServlet",urlPatterns = {"/index","/","/hello"})/*"/index","/hello",*/
 public class IndexServlet extends HttpServlet {
     /*日志打印*/
     private static Logger logger = Logger.getLogger(IndexServlet.class);
@@ -26,7 +26,6 @@ public class IndexServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         System.out.println("index进入一次");
-        //logger.info(this.getClass().getName() + "类调用了doGet方法");
 
         IndexService indexService = new IndexService();
         List<Blog> blogs = indexService.getHotBlogs();

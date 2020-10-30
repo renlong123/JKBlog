@@ -46,6 +46,9 @@
         font-weight: bold;
         cursor: pointer;
     }
+    .incenter{
+        text-align: center;
+    }
 </style>
 
 <body>
@@ -54,7 +57,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-10">
-            <div class="jumbotron">
+            <div class="jumbotron incenter">
                 <div class="text-center">
                     <img src="resources/img/javalogo.jpg" class="rounded card-img-top" alt="头像不见了" style="width: 80px;height: 80px">
                 </div>
@@ -78,7 +81,7 @@
                     查看全部
                 </button>
             </p>
-            <c:forEach items="${requestScope.blogs}" var="blog" begin="0" end="${requestScope.blogs.size() - 1 }">
+            <c:forEach items="${requestScope.blogs}" var="blog">
                 <div style="height: 10px"></div>
                 <div class="card">
                     <div class="card-body">
