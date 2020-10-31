@@ -3,6 +3,7 @@ package com.jkblog.service;
 import com.jkblog.dao.JDBCDAO;
 import com.jkblog.entity.Blog;
 import com.jkblog.entity.BlogCategory;
+import com.jkblog.entity.BlogComment;
 import com.jkblog.entity.BlogUser;
 
 import java.util.Date;
@@ -28,6 +29,8 @@ public class BlogService {
             maps.put("category",category);
             BlogUser user = getUser(gettedBlog.getBlogUserId());
             maps.put("user",user);
+            List<BlogComment> blogComments = getAllBlogCommentByBlogId(blogId);
+            maps.put("blogComments",blogComments);
         }else{
             maps = null;
         }
@@ -35,6 +38,16 @@ public class BlogService {
         return maps;
     }
 
+    /**
+     * 将所有一级评论拉出来
+     * @param blogId
+     * @return
+     */
+    public List<BlogComment> getAllBlogCommentByBlogId(Integer blogId){
+        String sql = "select * from blogcomment where commentBlogId=? and commentFather=0";
+        List<BlogComment> blogComments = JDBCDAO.serachObject(BlogComment.class, sql, blogId);
+        return blogComments;
+    }
 
     /**
      * 根据分类ID查找分类所有信息
@@ -102,9 +115,13 @@ public class BlogService {
         subString = subString.replaceAll("img","图片").replaceAll("<","").replaceAll(">","");
 
         int i = JDBCDAO.comUpdate(sql, blog.getBlogTitle(), content, now, blog.getBlogCategoryId(), subString, blog.getBlogId());
-
         return i;
+    }
 
+    public int updateBlogReaderTimes(Integer blogId){
+        String sql = "update blog set blogReadTimes=blogReadTimes+1 where blogId=?";
+        int i = JDBCDAO.comUpdate(sql, blogId);
+        return i;
     }
 
 }

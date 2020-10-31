@@ -12,7 +12,7 @@ import java.io.IOException;
 @WebFilter(filterName = "Filter2_LoginFilter",urlPatterns = "/*")
 public class LoginFilter implements Filter {
 
-    private String[] excludedPathNoLogin = {"/blogedit","/loginOut","/blogdelete"};
+    private String[] excludedPathNoLogin = {"/blogedit","/loginOut","/blogdelete","/userinfo"};
     private String[] excludedPathLogined = {"/register","/login"};
     private String[] excludedPathCookie = {"/resources"};
 
@@ -43,22 +43,25 @@ public class LoginFilter implements Filter {
             /*当session中没有用户时，查看当前cookie是否有登录信息*/
             if (userId == null || userId.equals("")) {
                 Cookie[] cookies = request.getCookies();
-                for (Cookie cookie : cookies) {
-                    if (cookie.getName() == "userId") {
-                        String value = cookie.getValue();
-                        Integer userIdCookie = Integer.parseInt(value);
-                        if (userIdCookie == null || userIdCookie.equals("")) {
-                            /*把无用的cookie删了*/
-                            deleteCookie(request, (HttpServletResponse) resp);
-                        } else {
-                            String userNameByUserId = new UserService().getUserNameByUserId(userIdCookie);
-                            if (userNameByUserId == null || userNameByUserId.equals("")) {
+                if(cookies!=null) {
+                    for (Cookie cookie : cookies) {
+                        if ("userId".equals(cookie.getName())) {
+                            System.out.println(cookie.getPath());
+                            String value = cookie.getValue();
+                            Integer userIdCookie = Integer.parseInt(value);
+                            if (userIdCookie == null || userIdCookie.equals("")) {
                                 /*把无用的cookie删了*/
                                 deleteCookie(request, (HttpServletResponse) resp);
                             } else {
-                                request.getSession().setAttribute("userId", userIdCookie);
-                                request.getSession().setAttribute("userName", userNameByUserId);
-                                isLogined = true;
+                                String userNameByUserId = new UserService().getUserNameByUserId(userIdCookie);
+                                if (userNameByUserId == null || userNameByUserId.equals("")) {
+                                    /*把无用的cookie删了*/
+                                    deleteCookie(request, (HttpServletResponse) resp);
+                                } else {
+                                    request.getSession().setAttribute("userId", userIdCookie);
+                                    request.getSession().setAttribute("userName", userNameByUserId);
+                                    isLogined = true;
+                                }
                             }
                         }
                     }

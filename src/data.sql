@@ -42,3 +42,13 @@ create table blog(
 
     primary key(blogId)
 );
+
+CREATE TABLE blogcomment(
+    blogCommentId INT AUTO_INCREMENT,
+    blogCommentContents VARCHAR(4096) NOT NULL,
+    commentTime DATETIME NOT NULL,
+    commitUserId INT NOT NULL,
+    commitBlogId INT NOT NULL,
+    commitFather INT NOT NULL,
+    PRIMARY KEY(blogCommentId)
+)

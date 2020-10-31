@@ -1,3 +1,4 @@
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: renlo
@@ -57,79 +58,101 @@
 <%@include file="header.jsp" %>
 
 <div class="container-fluid">
-    <h3 class="incenter">个人信息</h3>
-    <form enctype="multipart/form-data">
-        <div class="mb-3">
-            <label for="validationTitle">用户名</label>
-            <input class="form-control" id="validationTitle" placeholder="请输入标题，长度大于2，小于255" required name="blogTitle"></input>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="invalid-feedback">
-                Please enter a message in the textarea.
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="validationPassword">密码</label>
-            <input type="password" class="form-control" id="validationPassword" placeholder="请输入新密码" required name="userPassword"></input>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="invalid-feedback">
-                Please enter a message in the textarea.
+    <h3 class="incenter">修改个人信息</h3>
+    <form action="userinfo" method="post">
+        <div class="form-group row" id="validateUserName">
+            <label for="inputUserName" class="col-sm-2 col-form-label">用户名</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="inputUserName" placeholder="请输入用户名" name="userName"
+                       pattern="[A-Za-z0-9\u4e00-\u9fa5]{2,50}" required onkeyup="validateUserName($(this))"
+                       onblur="validateUserName($(this))" value="${requestScope.user.userName}">
+                <div class="invalid-feedback"><small>用户名应为2-50位字母或数字或中文！</small></div>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="validationEmail">邮箱</label>
-            <input type="email" class="form-control" id="validationEmail" placeholder="请输入新密码" required name="userEmail"></input>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="invalid-feedback">
-                Please enter a message in the textarea.
+        <div class="form-group row"  id="validatePassword">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">密码</label>
+            <div class="col-sm-10">
+                <input type="password" name="userPassword"  class="form-control" id="inputPassword3" placeholder="请输入新密码" pattern="[A-Za-z0-9]{6,30}"
+                       required onkeyup="validateHtml5($(this))">
+                <div class="invalid-feedback">密码长度至少为六位,只能是大小写字母或数字！</div>
             </div>
         </div>
-        <div class="mb-3">
-            <label for="validationBirthDay">出生日期</label>
-            <input class="form-control" id="validationBirthDay" required></input>
-            <div class="valid-feedback">
-                Looks good!
-            </div>
-            <div class="invalid-feedback">
-                Please enter a message in the textarea.
+        <div class="form-group row"  id="validatePasswordConfirm">
+            <label for="inputPassword4" class="col-sm-2 col-form-label">密码确认</label>
+            <div class="col-sm-10">
+                <input type="password"  class="form-control" id="inputPassword4" placeholder="请确认新密码" onkeyup="validatePasswordConfirm($(this))">
+                <div class="invalid-feedback">密码不一致</div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlFile">头像</label>
-            <img src="resources/img/javalogo.jpg" style="width: 20px;height: 20px">
-            <input type="file" name="image" class="file" id="exampleFormControlFile"/>
-            <p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过10.0M</p>
-        </div>
-        <div class="mb-3">
-            <label for="validationContent">个人简介</label>
-            <input type="text" class="form-control" id="validationContent" required></input>
-        </div>
-        <div class="form-group row" >
-            <label for="exampleRadios" class="col-sm-2 col-form-label">性别</label>
-            <div class="col-sm-10" id="exampleRadios">
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                <label class="form-check-label" for="exampleRadios1">
-                    保密
-                </label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                <label class="form-check-label" for="exampleRadios2">
-                    男
-                </label>
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios3" value="option3">
-                <label class="form-check-label" for="exampleRadios3">
-                    女
-                </label>
+        <div class="form-group row" id="validateEmail">
+            <label for="inputemail" class="col-sm-2 col-form-label">邮箱</label>
+            <div class="col-sm-10">
+                <input type="email" name="userEmail" class="form-control" id="inputemail" placeholder="name@example.com"
+                       required onkeyup="validateHtml5($(this))" value="${requestScope.user.userEmail}">
+                <div class="invalid-feedback">邮箱地址格式不正确！</div>
             </div>
         </div>
-        <button class="btn btn-success">提交</button>
+        <div class="form-group row" id="validatebirth">
+            <label for="validationBirthDay" class="col-sm-2 col-form-label">出生日期</label>
+            <div class="col-sm-10">
+                <input class="form-control" id="validationBirthDay" required name="userBirthDay">
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">性别</legend>
+                <div class="col-sm-10">
+                    <div class="form-check">
+                        <c:if test="${requestScope.user.userGender == '无'}">
+                            <input class="form-check-input" type="radio" name="userGender" id="gridRadios1" value="0" checked>
+                        </c:if>
+                        <c:if test="${requestScope.user.userGender != '无'}">
+                            <input class="form-check-input" type="radio" name="userGender" id="gridRadios1" value="0">
+                        </c:if>
+                        <label class="form-check-label" for="gridRadios1">
+                            保密
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <c:if test="${requestScope.user.userGender == '男'}">
+                            <input class="form-check-input" type="radio" name="userGender" id="gridRadios2" value="1" checked>
+                        </c:if>
+                        <c:if test="${requestScope.user.userGender != '男'}">
+                            <input class="form-check-input" type="radio" name="userGender" id="gridRadios2" value="1">
+                        </c:if>
+                        <label class="form-check-label" for="gridRadios2">
+                            男
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <c:if test="${requestScope.user.userGender == '女'}">
+                            <input class="form-check-input" type="radio" name="userGender" id="gridRadios3" value="2" checked>
+                        </c:if>
+                        <c:if test="${requestScope.user.userGender != '女'}">
+                            <input class="form-check-input" type="radio" name="userGender" id="gridRadios3" value="2">
+                        </c:if>
+                        <label class="form-check-label" for="gridRadios3">
+                            女
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row" id="validateDescription">
+            <label for="inputDesc" class="col-sm-2 col-form-label">个人简介</label>
+            <div class="col-sm-10">
+                <input type="text" name="userDescription" class="form-control" id="inputDesc"
+                          value="${requestScope.user.userDescription}" rows="3"></input>
+            </div>
+        </div>
+        <div div class="form-group row">
+            <label class="col-sm-2 col-form-label"></label>
+            <div class="col-sm-10">
+                <button class="btn btn-success">提交</button>
+            </div>
+        </div>
     </form>
+
 </div>
 <%@include file="footer.jsp" %>
 <script>
@@ -158,13 +181,60 @@
     });
 
    $(function () {
-       var date = new Date();
-       var y = date.getFullYear();
-       var m = date.getMonth()+1;
-       var d = date.getDate();
-       var nowDate = y+"-"+m+"-"+d;
-       $('#validationBirthDay').val(nowDate);
+       var birthday = "${requestScope.user.userBirthDay}";
+       if(birthday == ""){
+           var date = new Date();
+           var y = date.getFullYear();
+           var m = date.getMonth()+1;
+           var d = date.getDate();
+           var nowDate = y+"-"+m+"-"+d;
+           $('#validationBirthDay').val(nowDate);
+       }else{
+           $('#validationBirthDay').val(birthday);
+       }
    });
+    /**前端加服务端校验
+     */
+    function validateUserName(obj) {
+        if(!obj[0].checkValidity()){
+            obj.siblings(".invalid-feedback").text("用户名应为2-50位字母或数字或中文！");
+            obj.removeClass("is-invalid");
+            obj.parent().addClass("was-validated");
+        }else{
+            $.ajax({
+                type: "GET",
+                url: "namevalidate?userName="+obj.val(),
+                success: function (result) {
+                    if(result == "yes"){
+                        obj.siblings(".invalid-feedback").text("用户名应为2-50位字母或数字或中文！");
+                        obj.removeClass("is-invalid");
+                        obj.parent().addClass("was-validated");
+                    }else{
+                        obj.parent().removeClass("was-validated");
+                        obj.siblings(".invalid-feedback").text("用户名已经被占用了！");
+                        obj.addClass("is-invalid");
+                    }
+                }
+            });
+        }
+    }
+
+    /*
+    * 默认的校验*/
+    function validateHtml5(obj) {
+        obj.parent().addClass("was-validated");
+    }
+
+    /*密码是否一致校验*/
+    function validatePasswordConfirm(obj) {
+        if($("#inputPassword3").val() == obj.val()){
+            obj.removeClass("is-invalid");
+            obj.addClass("is-valid");
+        }else{
+            obj.removeClass("is-valid");
+            obj.addClass("is-invalid");
+        }
+    }
 
 </script>
 

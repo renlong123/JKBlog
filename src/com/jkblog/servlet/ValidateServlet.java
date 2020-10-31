@@ -18,13 +18,18 @@ public class ValidateServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        String userName1 = (String)request.getSession().getAttribute("userName");
         String userName = request.getParameter("userName");
-        UserService userService = new UserService();
-        BlogUser name = userService.getUserByName(userName);
-        if( name==null || name.getUserId()==null || name.getUserId() == 0){
+        if(userName != null && userName.equals(userName1)){
             response.getWriter().write("yes");
-        }else {
-            response.getWriter().write("no");
+        }else{
+            UserService userService = new UserService();
+            BlogUser name = userService.getUserByName(userName);
+            if( name==null || name.getUserId()==null || name.getUserId() == 0){
+                response.getWriter().write("yes");
+            }else {
+                response.getWriter().write("no");
+            }
         }
     }
 }

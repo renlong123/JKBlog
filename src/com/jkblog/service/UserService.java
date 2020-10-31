@@ -69,4 +69,15 @@ public class UserService {
                 blogUser.getUserBirthDay(), blogUser.getUserEmail());
         return i;
     }
+
+    public int updateUser(BlogUser blogUser,String userGender){
+        String sql = "update bloguser set userName=?,userPassword=?,userDescription=?,userGender=?," +
+                "userBirthDay=?,userEmail=? where userId=?";
+
+        int i = JDBCDAO.comUpdate(sql, blogUser.getUserName(), blogUser.getUserPassword(),
+                blogUser.getUserDescription(), userGender,
+                blogUser.getUserBirthDay(), blogUser.getUserEmail(),blogUser.getUserId());
+
+        return i;
+    }
 }

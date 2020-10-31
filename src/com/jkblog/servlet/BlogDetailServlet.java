@@ -37,6 +37,7 @@ public class BlogDetailServlet extends HttpServlet {
             if(allInfo == null){
                 jumpToError("博客不存在",req,resp);
             }else{
+                blogService.updateBlogReaderTimes(blogIntId);
                 req.setAttribute("allInfo",allInfo);
                 req.getRequestDispatcher("/WEB-INF/view/blogDetail.jsp").forward(req,resp);
             }
