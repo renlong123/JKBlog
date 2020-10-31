@@ -124,7 +124,7 @@
         </div>
     </div>
 </div>
-
+<%@include file="footer.jsp" %>
 <script type="text/javascript" src="resources/js/wangEditor.min.js"></script>
 <script type="text/javascript">
     const E = window.wangEditor

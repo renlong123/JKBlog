@@ -21,7 +21,7 @@ public class BeanUtil {
                 }else if(propertyValue.equals("2")){
                     field.set(object,UserGender.女);
                 }else{
-                    field.set(object,UserGender.未知);
+                    field.set(object,UserGender.无);
                 }
             }else{
                 field.set(object,propertyValue);

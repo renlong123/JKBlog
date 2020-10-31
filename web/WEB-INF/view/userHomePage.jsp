@@ -166,7 +166,7 @@
         </div>
     </div>
 </div>
-
+<%@include file="footer.jsp" %>
 <script>
     function contentDetail(blogId) {
         window.location.href = "blogdetail?blogId="+blogId;

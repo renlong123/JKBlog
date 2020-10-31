@@ -30,6 +30,12 @@ public class UserService {
         return blogService.getUser(userId);
     }
 
+    public String  getUserNameByUserId(Integer userId){
+        String sql = "select userName from bloguser where userId=?";
+        String item = JDBCDAO.selectStringItem(sql, userId);
+        return item;
+    }
+
     public List<Blog> getHotBlogsByUserId(Integer userId){
         String sql = "select blogId,blogTitle,blogReadTimes,blogCategoryId,blogCommentTimes,blogBriefContent " +
                 "from blog where blogUserId=? order by blogReadTimes desc limit 0,5";
@@ -54,4 +60,13 @@ public class UserService {
 /*    public int getUserByUserName(String userName){
 
     }*/
+
+    public int insertUser(BlogUser blogUser,String userGender){
+        String sql = "insert into bloguser values(null,?,?,?,?,?,?,0,?)";
+
+        int i = JDBCDAO.comUpdate(sql, blogUser.getUserName(), blogUser.getUserPassword(),
+                blogUser.getUserDescription(), userGender, blogUser.getUserCreateTime(),
+                blogUser.getUserBirthDay(), blogUser.getUserEmail());
+        return i;
+    }
 }

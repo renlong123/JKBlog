@@ -134,7 +134,7 @@
         </ul>
     </nav>
 </div>
-
+<%@include file="footer.jsp" %>
 <div class="modal" tabindex="-1" role="dialog" id="blogDeleteModal">
     <div class="modal-dialog">
         <div class="modal-content">

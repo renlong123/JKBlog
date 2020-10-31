@@ -131,7 +131,7 @@
         <button class="btn btn-success">提交</button>
     </form>
 </div>
-
+<%@include file="footer.jsp" %>
 <script>
 
     $('#validationBirthDay').datetimepicker({

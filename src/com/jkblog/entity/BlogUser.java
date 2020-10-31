@@ -43,16 +43,6 @@ public class BlogUser {
 
 
 
-    public Date getUserBirthTime() {
-        return userBirthDay;
-    }
-
-    public void setUserBirthTime(Date userBirthDay) {
-        this.userBirthDay = userBirthDay;
-    }
-
-
-
     public Integer getUserId() {
         return userId;
     }

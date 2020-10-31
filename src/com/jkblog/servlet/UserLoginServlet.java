@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,12 +26,14 @@ public class UserLoginServlet extends HttpServlet {
      * @throws IOException
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        response.setCharacterEncoding("UTF-8");
         response.setContentType("text/html;charset=UTF-8");
+
+        String rememberMe = request.getParameter("rememberMe");
         String userName = request.getParameter("userName");
         String password = request.getParameter("userPassword");
+
         logger.info(userName+"======="+password);
+
         if(userName != null && !userName.equals("")){
             UserService userService = new UserService();
             BlogUser user = userService.getUserByName(userName);
@@ -38,6 +41,14 @@ public class UserLoginServlet extends HttpServlet {
                 logger.info("登录成功");
                 request.getSession().setAttribute("userName",userName);
                 request.getSession().setAttribute("userId",user.getUserId());
+
+                if(rememberMe != null && rememberMe.equals("rememberMe")){
+                    /*返回cookie所有路径都用，*/
+                    Cookie cookie = new Cookie("userId",user.getUserId().toString());
+                    cookie.setMaxAge(7*24*60*60);
+                    cookie.setPath(request.getContextPath()+"/");
+                    response.addCookie(cookie);
+                }
                 response.sendRedirect("index");
             }else{
                 request.setAttribute("loginTips","用户名不存在或与密码不匹配");

@@ -42,5 +42,7 @@
             window.location.href = "index";
         }
     </script>
+    <div style="height: 500px"></div>
+    <%@include file="footer.jsp" %>
 </body>
 </html>

@@ -89,77 +89,75 @@
       </div>
 
       <%--前三--%>
-      <div class="container-fluid">
-        <div class="row incenter">
-          <div class="col-4 incenter">
-            <div class="card fixheight">
-              <div id="thesecond" class="card-img-top">
-                <div class="hotBlog">2</div>
-              </div>
-              <div class="card-body">
-                <c:if test="${requestScope.blogs.size() > 1}" >
-                  <p class="titleInText"
-                     onclick="contentDetail(${requestScope.blogs[1].blogId})">
-                      ${requestScope.blogs[1].blogTitle}
-                  </p>
-                  <hr/>
-                  <p class="contentInText">
-                    ${requestScope.blogs[1].blogBriefContent}
-                  </p>
-                  <p class="statusInText">
-                    <span class="badge badge-primary">阅读数：${requestScope.blogs[1].blogReadTimes}</span>
-                    <span class="badge badge-success">评论数：${requestScope.blogs[1].blogCommentTimes}</span>
-                  </p>
-                </c:if>
-              </div>
+      <div class="row">
+        <div class="col-4 incenter">
+          <div class="card fixheight">
+            <div id="thesecond" class="card-img-top">
+              <div class="hotBlog">2</div>
             </div>
-          </div>
-          <div class="col-4 incenter">
-            <div class="card fixheight">
-              <div id="thefirst" class="card-img-top">
-                <div class="hotBlog">1</div>
-              </div>
-              <div class="card-body">
-                <p class="card-text">
-                  <c:if test="${requestScope.blogs.size() > 0}" >
-                  <p class="titleInText"
-                     onclick="contentDetail(${requestScope.blogs[0].blogId})">
-                    ${requestScope.blogs[0].blogTitle}
-                  </p>
-                  <hr/>
-                  <p class="contentInText">
-                    ${requestScope.blogs[0].blogBriefContent}
-                  </p>
-                  <p class="statusInText">
-                    <span class="badge badge-primary">阅读数：${requestScope.blogs[0].blogReadTimes}</span>
-                    <span class="badge badge-success">评论数：${requestScope.blogs[0].blogCommentTimes}</span>
-                  </p>
-                </c:if>
-                </p>
-              </div>
-            </div>
-          </div>
-          <div class="col-4 incenter">
-            <div class="card fixheight">
-              <div id="thethird" class="card-img-top">
-                <div class="hotBlog">3</div>
-              </div>
-              <div class="card-body">
-                <c:if test="${requestScope.blogs.size() > 2}" >
+            <div class="card-body">
+              <c:if test="${requestScope.blogs.size() > 1}" >
                 <p class="titleInText"
-                   onclick="contentDetail(${requestScope.blogs[2].blogId})">
-                  ${requestScope.blogs[2].blogTitle}
+                   onclick="contentDetail(${requestScope.blogs[1].blogId})">
+                    ${requestScope.blogs[1].blogTitle}
                 </p>
                 <hr/>
                 <p class="contentInText">
-                  ${requestScope.blogs[2].blogBriefContent}
+                  ${requestScope.blogs[1].blogBriefContent}
                 </p>
                 <p class="statusInText">
-                  <span class="badge badge-primary">阅读数：${requestScope.blogs[2].blogReadTimes}</span>
-                  <span class="badge badge-success">评论数：${requestScope.blogs[2].blogCommentTimes}</span>
+                  <span class="badge badge-primary">阅读数：${requestScope.blogs[1].blogReadTimes}</span>
+                  <span class="badge badge-success">评论数：${requestScope.blogs[1].blogCommentTimes}</span>
                 </p>
-                </c:if>
-              </div>
+              </c:if>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 incenter">
+          <div class="card fixheight">
+            <div id="thefirst" class="card-img-top">
+              <div class="hotBlog">1</div>
+            </div>
+            <div class="card-body">
+              <p class="card-text">
+                <c:if test="${requestScope.blogs.size() > 0}" >
+                <p class="titleInText"
+                   onclick="contentDetail(${requestScope.blogs[0].blogId})">
+                  ${requestScope.blogs[0].blogTitle}
+                </p>
+                <hr/>
+                <p class="contentInText">
+                  ${requestScope.blogs[0].blogBriefContent}
+                </p>
+                <p class="statusInText">
+                  <span class="badge badge-primary">阅读数：${requestScope.blogs[0].blogReadTimes}</span>
+                  <span class="badge badge-success">评论数：${requestScope.blogs[0].blogCommentTimes}</span>
+                </p>
+              </c:if>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-4 incenter">
+          <div class="card fixheight">
+            <div id="thethird" class="card-img-top">
+              <div class="hotBlog">3</div>
+            </div>
+            <div class="card-body">
+              <c:if test="${requestScope.blogs.size() > 2}" >
+              <p class="titleInText"
+                 onclick="contentDetail(${requestScope.blogs[2].blogId})">
+                ${requestScope.blogs[2].blogTitle}
+              </p>
+              <hr/>
+              <p class="contentInText">
+                ${requestScope.blogs[2].blogBriefContent}
+              </p>
+              <p class="statusInText">
+                <span class="badge badge-primary">阅读数：${requestScope.blogs[2].blogReadTimes}</span>
+                <span class="badge badge-success">评论数：${requestScope.blogs[2].blogCommentTimes}</span>
+              </p>
+              </c:if>
             </div>
           </div>
         </div>
@@ -205,7 +203,7 @@
     </div>
   </div>
 </div>
-
+<%@include file="footer.jsp" %>
 <script>
 
   function contentDetail(blogId) {
