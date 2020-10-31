@@ -20,13 +20,8 @@ public class CommentService {
             int i1 = JDBCDAO.comUpdate(sql1, blogComment.getCommentBlogId());
             if(i1 == 1){
                 if(blogComment.getCommentFather()!=0){
-                    String sql2 = "update blogcomment set commentSonCount=commentSonCount+1 where blogCommentId=?";
-                    int i2 = JDBCDAO.comUpdate(sql2, blogComment.getCommentFather());
-                    if(i2==1){
-                        return 1;
-                    }else {
-                        return 0;
-                    }
+                    int i2 = updateAlComments(blogComment.getCommentFather());
+                    return i2;
                 }else {
                     return 1;
                 }
@@ -36,6 +31,29 @@ public class CommentService {
         }else{
             return 0;
         }
+    }
+
+    /**
+     * 一次冒泡更新
+     * @param commentFather
+     * @return
+     */
+    public int updateAlComments(Integer commentFather){
+        if(commentFather != 0){
+            String sql2 = "update blogcomment set commentSonCount=commentSonCount+1 where blogCommentId=?";
+            int i2 = JDBCDAO.comUpdate(sql2, commentFather);
+            if(i2==1){
+                String sql = "select commentFather from blogcomment where blogCommentId=?";
+                Integer integer = JDBCDAO.selectIntItem(sql, commentFather);
+                int i = updateAlComments(integer);
+                return i;
+            }else {
+                return 0;
+            }
+        }else{
+            return 1;
+        }
+
     }
 
     public List<BlogComment> getAllCommentByFatherId(Integer commentFather){

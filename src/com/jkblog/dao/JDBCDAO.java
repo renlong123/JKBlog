@@ -219,6 +219,38 @@ public class JDBCDAO {
         return string;
     }
 
+    public static Integer selectIntItem(String sql,Object... args){
+        Connection con = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        Integer integer = null;
+
+        try {
+            con = DBUtil.getConnection();
+            ps = con.prepareStatement(sql);
+
+            /*逐个设置预处理条件*/
+            for(int i=0;i<args.length;i++){
+                ps.setObject(i+1,args[i]);
+            }
+
+            rs = ps.executeQuery();
+
+            if(rs.next()){
+                integer = rs.getInt(1);
+            }
+
+
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }finally {
+            DBUtil.closeResultSet(rs);
+            DBUtil.closeStatement(ps);
+            DBUtil.closeConnection(con);
+        }
+        return integer;
+    }
+
     public static int getCount(String sql,Object... args){
         Connection con = null;
         PreparedStatement ps = null;

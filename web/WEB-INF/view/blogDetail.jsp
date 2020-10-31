@@ -276,26 +276,43 @@
 
             var commentContent = $("<label class='mylink'>"+value.blogCommentContents+"</label>");
             commentContent.click(function () {
-                var panelComment = obj.parent().siblings('.sonCommentPanelSon');
+
+                var panelComment = obj.siblings('.sonCommentPanelSon');
+                //alert(panelComment);
                 if(panelComment.is(":hidden")){
                     panelComment.removeAttr("hidden");
                     panelComment.show();
-                    //obj.text("收起评论");
-                }/*else{
-
+                }
+                panelComment.children(".commentYes").one("click",function () {
+                    var blogCommentContents = panelComment.children(".contentInText").children(".form-control").val();
+                    //alert(blogCommentContents);
+                    $.ajax({
+                        type: "POST",
+                        url: "comment",
+                        data: {
+                            "blogCommentContents": blogCommentContents,
+                            "commentBlogId": "${requestScope.allInfo.blog.blogId}",
+                            "commentFather": value.blogCommentId
+                        },
+                        success: function (result) {
+                            if(result == "success"){
+                                panelComment.hide();
+                            }else{
+                                alert("失败了");
+                            }
+                        }
+                    });
+                });
+                panelComment.children(".commentNo").click(function () {
                     panelComment.hide();
-                    obj.text("评论");
-                }*/
-                panelComment.children(".commentYes").click(function () {
-
                 });
             });
 
             var divs = $("<div></div>");
             var content;
             if(commentId == value.commentFather){
-                content = "<a href='homepage?userId='"+value.commentUserId+" >"+value.commentUserName+"</a>: "+
-                    "<label class='mylink' onclick='commentEvent(obj,)'>"+value.blogCommentContents+"</label>";
+                content = "<a href='homepage?userId='"+value.commentUserId+" >"+value.commentUserName+"</a>: "/*+
+                    "<label class='mylink' onclick='commentEvent(obj,)'>"+value.blogCommentContents+"</label>"*/;
             }else{
                 var fatherName;
                 var fatherId;
@@ -307,7 +324,8 @@
                     }
                 });
                 content = "<a href='homepage?userId='"+value.commentUserId+" >"+
-                    value.commentUserName+"</a> 回复 <a href='homepage?userId='"+ fatherId +" > "+fatherName+"</a>: <label class='mylink'>"+value.blogCommentContents+"</label>";
+                    value.commentUserName+"</a> 回复 <a href='homepage?userId='"+ fatherId +" > "+fatherName+"</a>:"
+                /*"<label class='mylink'>"+value.blogCommentContents+"</label>"*/;
             }
             divs.append(content);
             divs.append(commentContent);
