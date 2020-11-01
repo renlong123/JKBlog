@@ -1,6 +1,5 @@
 package com.jkblog.utils;
 
-import com.jkblog.servlet.BlogListServlet;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

@@ -1,7 +1,6 @@
 package com.jkblog.servlet;
 
 import com.jkblog.entity.BlogUser;
-import com.jkblog.entity.UserGender;
 import com.jkblog.service.CommonService;
 import com.jkblog.service.UserService;
 import org.apache.log4j.Logger;
@@ -17,7 +16,7 @@ import java.util.Date;
 @WebServlet(name = "UserRegisterServlet",urlPatterns = "/register")
 public class UserRegisterServlet extends HttpServlet {
     /*日志打印*/
-    private static Logger logger = Logger.getLogger(BlogListServlet.class);
+    private static Logger logger = Logger.getLogger(SerachServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //request.setCharacterEncoding("UTF-8");

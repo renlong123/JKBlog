@@ -16,7 +16,7 @@ import java.io.IOException;
 public class UserLoginServlet extends HttpServlet {
 
     /*日志打印*/
-    private static Logger logger = Logger.getLogger(BlogListServlet.class);
+    private static Logger logger = Logger.getLogger(SerachServlet.class);
 
     /**
      * 登录请求

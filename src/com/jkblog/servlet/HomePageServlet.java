@@ -18,7 +18,7 @@ import java.util.List;
 public class HomePageServlet extends HttpServlet {
 
     /*日志打印*/
-    private static Logger logger = Logger.getLogger(BlogListServlet.class);
+    private static Logger logger = Logger.getLogger(SerachServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         logger.info(this.getClass().getName() + "调用了dopost方法");

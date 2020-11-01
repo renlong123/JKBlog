@@ -19,7 +19,7 @@ public class BlogEditServlet extends HttpServlet {
     BlogService blogService = new BlogService();
 
     /*日志打印*/
-    private static Logger logger = Logger.getLogger(BlogListServlet.class);
+    private static Logger logger = Logger.getLogger(SerachServlet.class);
 
     /**
      * 处理博客的新建及修改请求

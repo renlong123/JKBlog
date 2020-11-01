@@ -18,7 +18,7 @@ import java.text.SimpleDateFormat;
 @WebServlet(name = "UserInfoServlet",urlPatterns = "/userinfo")
 public class UserInfoServlet extends HttpServlet {
     /*日志打印*/
-    private static Logger logger = Logger.getLogger(BlogListServlet.class);
+    private static Logger logger = Logger.getLogger(SerachServlet.class);
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

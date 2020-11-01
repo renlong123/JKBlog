@@ -98,7 +98,7 @@
             <c:if test="${requestScope.pages < 5}">
                 <c:forEach begin="1" end="${requestScope.pages}" var="number">
                     <c:if test="${requestScope.page == number}">
-                        <li class="page-item disabled"><a class="page-link" href="#" aria-disabled="true">${number}</a></li>
+                        <li class="page-item active disabled"><a class="page-link" href="#" aria-disabled="true">${number}</a></li>
                     </c:if>
                     <c:if test="${requestScope.page != number}">
                         <li class="page-item"><a class="page-link" href="blogs/page?page=${number}">${number}</a></li>

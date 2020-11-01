@@ -182,6 +182,32 @@ public class JDBCDAO {
     }
 
     /**
+     * 通用的更新方法，可以执行插入，修改，删除,具备事务功能
+     * @param sql
+     * @param args
+     */
+    public static int comUpdate(Connection con,String sql,Object... args){
+        PreparedStatement ps = null;
+        int update = 0;
+        try {
+            con = DBUtil.getConnection();
+            ps = con.prepareStatement(sql);
+
+            for (int i = 0; i < args.length; i++) {
+                ps.setObject(i + 1, args[i]);
+            }
+            //ps.addBatch();
+            update = ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            DBUtil.closeStatement(ps);
+        }
+        return update;
+    }
+
+    /**
      * 查找单一字符串
      * @param sql
      * @param args
@@ -281,4 +307,5 @@ public class JDBCDAO {
         }
         return count;
     }
+
 }

@@ -12,6 +12,15 @@
     $(function () {
 
     });
+
+    /**
+     * 执行搜索按钮后跳转到搜索界面。
+     * @param obj
+     */
+    function serachContent(obj) {
+        var serachText = obj.siblings(".serachClass").val();
+        window.location.href = "serach?serachText="+serachText;
+    }
 </script>
 
 <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-light">
@@ -45,8 +54,8 @@
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
+                <input class="form-control mr-sm-2 serachClass" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="button" onclick="serachContent($(this))">搜索</button>
                 &nbsp;&nbsp;&nbsp;&nbsp;
                 <ul class="navbar-nav mr-auto">
                     <c:if test="${sessionScope.userName == null}">

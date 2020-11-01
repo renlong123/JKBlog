@@ -71,13 +71,24 @@
     font-weight: bold;
     cursor: pointer;
   }
+  li{
+    list-style: none;
+  }
+/*  .fixedLabel{
+    margin-left: 10px;
+    color: #7abaff;
+    cursor: pointer;
+    font-size: 16px;
+    font-family: "Microsoft YaHei UI";
+    line-height: 30px;
+  }*/
 </style>
 
 <body>
 
 <%@include file="header.jsp" %>
 
-<div class="container-fluid">
+<div class="container-fluid" style="width: 85%;min-width: 800px">
   <div class="row">
     <div class="col-10">
       <div class="jumbotron">
@@ -195,14 +206,39 @@
       </ul>
     </div>
     <div class="col-2">
-      <div style="padding-left: 1rem">
+    </div>
+
+
+<%--  <div style="padding-left: 1rem">
         <p class="text-left">热门博客</p>
         <p class="text-left">个人中心</p>
         <p class="text-left">博客页面</p>
       </div>
     </div>
-  </div>
+  </div>--%>
 </div>
+
+    <div id="dg" style="z-index: 9999; position: fixed ! important; /*right: 0px;*/ top: 70px;width: 85%;margin: auto;min-width: 800px">
+      <div class="container-fluid" style="margin: auto">
+        <div class="row">
+          <div class="col-10">
+          </div>
+          <div class="col-2" style="margin: auto">
+              <div class="fixedLabel">JAVA</div>
+              <div class="fixedLabel">C++</div>
+              <div class="fixedLabel">SPRING</div>
+              <div class="fixedLabel">SPRINGBOOT</div>
+              <div class="fixedLabel">SPRINGCLOUD</div>
+              <div class="fixedLabel">JAVA虚拟机</div>
+              <div class="fixedLabel">分类</div>
+              <div class="fixedLabel">分类</div>
+              <div class="fixedLabel">分类</div>
+              <div class="fixedLabel">分类</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
 <%@include file="footer.jsp" %>
 <script>
 

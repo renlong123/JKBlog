@@ -16,7 +16,7 @@ import java.lang.reflect.Method;
 public class BaseServlet extends HttpServlet {
 
     /*日志打印*/
-    private static Logger logger = Logger.getLogger(BlogListServlet.class);
+    private static Logger logger = Logger.getLogger(SerachServlet.class);
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
