@@ -87,7 +87,26 @@
 <body>
 
 <%@include file="header.jsp" %>
-
+<div id="dg" style="z-index: 9999; position: fixed ! important; /*right: 0px;*/ top: 70px;width: 85%;margin: auto;min-width: 800px">
+  <div class="container-fluid" style="margin: auto">
+    <div class="row">
+      <div class="col-10">
+      </div>
+      <div class="col-2" style="margin: auto">
+        <div class="fixedLabel">JAVA</div>
+        <div class="fixedLabel">C++</div>
+        <div class="fixedLabel">SPRING</div>
+        <div class="fixedLabel">SPRINGBOOT</div>
+        <div class="fixedLabel">SPRINGCLOUD</div>
+        <div class="fixedLabel">JAVA虚拟机</div>
+        <div class="fixedLabel">分类</div>
+        <div class="fixedLabel">分类</div>
+        <div class="fixedLabel">分类</div>
+        <div class="fixedLabel">分类</div>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="container-fluid" style="width: 85%;min-width: 800px">
   <div class="row">
     <div class="col-10">
@@ -218,26 +237,7 @@
   </div>--%>
 </div>
 
-    <div id="dg" style="z-index: 9999; position: fixed ! important; /*right: 0px;*/ top: 70px;width: 85%;margin: auto;min-width: 800px">
-      <div class="container-fluid" style="margin: auto">
-        <div class="row">
-          <div class="col-10">
-          </div>
-          <div class="col-2" style="margin: auto">
-              <div class="fixedLabel">JAVA</div>
-              <div class="fixedLabel">C++</div>
-              <div class="fixedLabel">SPRING</div>
-              <div class="fixedLabel">SPRINGBOOT</div>
-              <div class="fixedLabel">SPRINGCLOUD</div>
-              <div class="fixedLabel">JAVA虚拟机</div>
-              <div class="fixedLabel">分类</div>
-              <div class="fixedLabel">分类</div>
-              <div class="fixedLabel">分类</div>
-              <div class="fixedLabel">分类</div>
-          </div>
-        </div>
-      </div>
-    </div>
+
 
 <%@include file="footer.jsp" %>
 <script>
