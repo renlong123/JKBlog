@@ -118,7 +118,6 @@
         <p>加入JKBlog开放更多功能</p>
         <a class="btn btn-primary btn-lg" href="login" role="button">现在开始</a>
       </div>
-
       <%--前三--%>
       <div class="row">
         <div class="col-4 incenter">
