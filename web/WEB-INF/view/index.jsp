@@ -92,6 +92,7 @@
     <div class="row">
       <div class="col-10">
       </div>
+
       <div class="col-2" style="margin: auto">
         <div class="fixedLabel">JAVA</div>
         <div class="fixedLabel">C++</div>
