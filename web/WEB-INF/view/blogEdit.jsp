@@ -24,12 +24,12 @@
     <script type="text/javascript" rel="script" src="resources/js/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" rel="script" src="resources/js/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" rel="script" src="resources/js/bootstrap.min.js"></script>
-
+    <script type="text/javascript" src="resources/js/wangEditor.min.js"></script>
+    <script type="text/javascript" charset="gbk" src="resources/js/zh.js"></script>
     <title>博客列表</title>
 
 
 </head>
-
 <style>
     .incenter{
         text-align: center;
@@ -125,7 +125,7 @@
     </div>
 </div>
 <%@include file="footer.jsp" %>
-<script type="text/javascript" src="resources/js/wangEditor.min.js"></script>
+
 <script type="text/javascript">
     const E = window.wangEditor
     const editor = new E('#div1')

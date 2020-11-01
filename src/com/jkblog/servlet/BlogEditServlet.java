@@ -29,7 +29,7 @@ public class BlogEditServlet extends HttpServlet {
      * @throws IOException
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.setHeader("content-type", "text/html;charset=UTF-8");
         String blogId = request.getParameter("blogId");
         String blogTitle = request.getParameter("blogTitle");
         Integer blogCategoryId = Integer.parseInt(request.getParameter("blogCategoryId"));
@@ -68,6 +68,7 @@ public class BlogEditServlet extends HttpServlet {
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         //logger.info(this.getClass().getName() + "类调用了doGet方法");
+        response.setHeader("content-type", "text/html;charset=UTF-8");
 
         String blogId = request.getParameter("blogId");
         if(blogId == null || blogId.equals("")){
